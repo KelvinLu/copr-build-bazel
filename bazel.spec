@@ -2,8 +2,8 @@
 %define _disable_source_fetch 0
 
 Name:           bazel
-Version:        0.14.1
-Release:        2%{?dist}
+Version:        0.15.0
+Release:        1%{?dist}
 Summary:        Correct, reproducible, and fast builds for everyone.
 License:        Apache License 2.0
 URL:            http://bazel.io/
@@ -17,7 +17,6 @@ BuildRequires:  gcc-c++
 Requires:       java-1.8.0-openjdk-devel
 
 %define bashcompdir %(pkg-config --variable=completionsdir bash-completion 2>/dev/null)
-%global debug_package %{nil}
 %define __os_install_post %{nil}
 
 %description
@@ -36,7 +35,6 @@ CXX=g++
 %install
 %{__mkdir_p} %{buildroot}/%{_bindir}
 %{__mkdir_p} %{buildroot}/%{bashcompdir}
-%{__strip} --strip-unneeded output/bazel
 %{__cp} output/bazel %{buildroot}/%{_bindir}
 %{__cp} ./bazel-bin/scripts/bazel-complete.bash %{buildroot}/%{bashcompdir}/bazel
 
@@ -50,6 +48,10 @@ CXX=g++
 
 
 %changelog
+* Tue Jun 26 2018 Vincent Batts <vbatts@fedoraproject.org> 0.15.0-1
+- update to 0.15.0
+  https://github.com/bazelbuild/bazel/issues/5057
+
 * Fri Jun 22 2018 Vincent Batts <vbatts@fedoraproject.org> 0.14.1-2
 - stripping the binary. 100.5Mb -> 1.5Mb. Could not isolate out the debuginfo
   into its own linked debuginfo package. Not sture whats going on there. But
